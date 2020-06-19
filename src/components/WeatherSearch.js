@@ -40,8 +40,8 @@ const WeatherSearch = ({ getWeatherActions, cleanWeather, cityName }) => {
   )
 }
 
-const mapStateToProps = ({weather}) => ({
-  cityName: weather.currentWeather.name
+export const mapStateToProps = ({weather}) => ({
+  cityName: weather?.currentWeather?.name
 })
 
 export default connect(mapStateToProps, {getWeatherActions,cleanWeather})(WeatherSearch)

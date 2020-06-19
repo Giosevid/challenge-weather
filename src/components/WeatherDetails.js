@@ -5,7 +5,7 @@ import Loader from 'react-loader-spinner'
 import moment from 'moment'
 import {convertKelvinToCelsius, removeDuplicates} from "../utils";
 
-const WeatherDetails = ({ weather, error, fetching, currentWeather, otherDays }) => {
+const WeatherDetails = ({ error, fetching, currentWeather, otherDays }) => {
 
 const newWeather = otherDays.map(weatherElement => ({
   ...weatherElement,
@@ -30,7 +30,7 @@ const newWeather = otherDays.map(weatherElement => ({
 
 
   return ( !error ? (
-    <article className="album" >
+    <div className="album" data-test="component-weather-detail">
     <article className="container">
       <article className="row">
         {newWeathersArray.map((weatherElemnt, idx) => {
@@ -48,7 +48,7 @@ const newWeather = otherDays.map(weatherElement => ({
         })}
       </article>
     </article>
-  </article>) : null
+  </div>) : null
   )
 }
 
