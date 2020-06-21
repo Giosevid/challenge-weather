@@ -1,12 +1,12 @@
-import checkPropTypes from 'check-prop-types';
+import checkPropTypes from "check-prop-types";
 import thunk from "redux-thunk";
 import { createStore, applyMiddleware } from "redux";
-import {rootReducer} from "../redux/store";
+import { rootReducer } from "../redux/store";
 
-export const storeFactory = initialState => {
-  const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
-  return createStoreWithMiddleware(rootReducer, initialState)
-}
+export const storeFactory = (initialState) => {
+  const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+  return createStoreWithMiddleware(rootReducer, initialState);
+};
 
 /**
  * Return node(s) with the given data-test attribute.
@@ -16,7 +16,7 @@ export const storeFactory = initialState => {
  */
 export const findByTestAttr = (wrapper, val) => {
   return wrapper.find(`[data-test="${val}"]`);
-}
+};
 
 /**
  * Throw error if conformingProps do not pass propTypes validation.
@@ -27,7 +27,8 @@ export const checkProps = (component, conformingProps) => {
   const propError = checkPropTypes(
     component.propTypes,
     conformingProps,
-    'prop',
-    component.name);
+    "prop",
+    component.name
+  );
   expect(propError).toBeUndefined();
-}
+};
