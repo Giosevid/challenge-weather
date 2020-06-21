@@ -1,22 +1,19 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { connect } from "react-redux";
+import PropTypes from 'prop-types'
+import { Formik, Form, ErrorMessage, Field } from "formik";
 import { Button } from "react-bootstrap";
 import SignupSchema from "../config/validationsForm";
 import { getWeatherActions, cleanWeather } from "../redux/weatherDuck";
-import { connect } from "react-redux";
 
 const WeatherSearch = ({ getWeatherActions, cleanWeather, cityName }) => {
-  const initialValues = {
-    cityName: cityName || "",
-  };
 
   const cleanInput = (setFieldValue) => {
     setFieldValue("cityName", "");
     cleanWeather();
   };
 
-  const onSubmit = ({ cityName, setErrors }) =>
-    getWeatherActions(cityName, setErrors);
+  const onSubmit = ({ cityName, setErrors }) => getWeatherActions(cityName, setErrors);
 
   return (
     <article className="jumbotron text-center">
@@ -27,11 +24,11 @@ const WeatherSearch = ({ getWeatherActions, cleanWeather, cityName }) => {
           lugar.
         </p>
         <Formik
-          initialValues={initialValues}
+          initialValues={{ cityName }}
           onSubmit={onSubmit}
           validationSchema={SignupSchema}
         >
-          {({ errors, touched, setFieldValue }) => (
+          {({ setFieldValue }) => (
             <Form>
               <Field
                 name="cityName"
@@ -39,7 +36,7 @@ const WeatherSearch = ({ getWeatherActions, cleanWeather, cityName }) => {
                 className="form-control text-center"
                 placeholder="Ingresa tu ciudad"
               />
-              {errors.search && touched.search && <div>{errors.search}</div>}
+              <ErrorMessage name="cityName">{msg => <div className="text-danger">{msg}</div>}</ErrorMessage>
               <div className="wrap-button">
                 <Button type="submit" variant="primary">
                   Consultar
@@ -58,6 +55,16 @@ const WeatherSearch = ({ getWeatherActions, cleanWeather, cityName }) => {
     </article>
   );
 };
+
+WeatherSearch.propTypes = {
+  getWeatherActions: PropTypes.func.isRequired,
+  cleanWeather: PropTypes.func.isRequired,
+  cityName: PropTypes.string
+}
+
+WeatherSearch.defaultProps = {
+  cityName: ''
+}
 
 export const mapStateToProps = ({ weather }) => ({
   cityName: weather?.currentWeather?.name,

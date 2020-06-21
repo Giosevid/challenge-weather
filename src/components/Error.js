@@ -13,7 +13,7 @@ const Error = ({ error, cleanWeather }) => {
         </Alert>
       </section>
     </article>
-  ) : null;
+  ) : <React.Fragment/>;
 };
 
 const mapStateToProps = ({ weather }) => ({

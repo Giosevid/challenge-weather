@@ -6,12 +6,8 @@ import moment from "moment";
 import { convertKelvinToCelsius, removeDuplicates } from "../utils";
 
 const WeatherDetails = ({ error, fetching, currentWeather, otherDays }) => {
-  const newWeather = otherDays.map((weatherElement) => ({
-    ...weatherElement,
-    filterDate: moment(weatherElement.dt_txt, "YYYY-MM-DD").format("DD"),
-  }));
 
-  const newWeathersArray = removeDuplicates(newWeather, "filterDate");
+  const newWeathersArray = removeDuplicates(otherDays);
 
   if (fetching) {
     return (
@@ -31,12 +27,12 @@ const WeatherDetails = ({ error, fetching, currentWeather, otherDays }) => {
     <div className="album" data-test="component-weather-detail">
       <article className="container">
         <article className="row">
-          {newWeathersArray.map((weatherElemnt, idx) => {
+          {newWeathersArray.map((weatherElement, idx) => {
             const {
               dt_txt,
               weather,
               main: { feels_like, temp, temp_max, temp_min, humidity },
-            } = weatherElemnt;
+            } = weatherElement;
             return (
               <Layout
                 key={idx}
@@ -60,7 +56,7 @@ const WeatherDetails = ({ error, fetching, currentWeather, otherDays }) => {
         </article>
       </article>
     </div>
-  ) : null;
+  ) : <React.Fragment/>;
 };
 
 const mapStateToProps = ({ weather }) => ({
